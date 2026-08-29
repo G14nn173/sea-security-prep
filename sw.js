@@ -1,5 +1,6 @@
-const CACHE_NAME = "sea-security-prep-v1";
-const CACHE_PREFIX = "sea-security-prep-";
+const CACHE_NAME = "airport-security-prep-v9";
+const CACHE_PREFIX = "airport-security-prep-";
+const LEGACY_CACHE_PREFIX = "sea-security-prep-";
 const PRECACHE_URLS = [
   "./",
   "./index.html",
@@ -30,7 +31,10 @@ self.addEventListener("activate", function (event) {
       return Promise.all(
         cacheNames
           .filter(function (name) {
-            return name.startsWith(CACHE_PREFIX) && name !== CACHE_NAME;
+            return (
+              name.startsWith(CACHE_PREFIX) ||
+              name.startsWith(LEGACY_CACHE_PREFIX)
+            ) && name !== CACHE_NAME;
           })
           .map(function (name) {
             return caches.delete(name);
@@ -49,19 +53,19 @@ self.addEventListener("fetch", function (event) {
   if (requestUrl.origin !== self.location.origin) return;
 
   event.respondWith(
-    caches.match(event.request).then(function (cachedResponse) {
-      if (cachedResponse) return cachedResponse;
+    caches.open(CACHE_NAME).then(function (cache) {
+      return cache.match(event.request).then(function (cachedResponse) {
+        if (cachedResponse) return cachedResponse;
 
-      return fetch(event.request).then(function (networkResponse) {
-        if (!networkResponse || networkResponse.status !== 200) {
-          return networkResponse;
-        }
+        return fetch(event.request).then(function (networkResponse) {
+          if (!networkResponse || networkResponse.status !== 200) {
+            return networkResponse;
+          }
 
-        const responseCopy = networkResponse.clone();
-        caches.open(CACHE_NAME).then(function (cache) {
+          const responseCopy = networkResponse.clone();
           cache.put(event.request, responseCopy);
+          return networkResponse;
         });
-        return networkResponse;
       });
     })
   );
