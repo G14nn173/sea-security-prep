@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Simulatore didattico non ufficiale per assessment psico-attitudinali in ambito security aeroportuale." />
+  <title>Test Psico-Attitudinale • SEA Security Prep</title>
+  <meta name="theme-color" content="#0b1f3a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="pwa.js" defer></script>
+</head>
+<body>
+  <nav class="portal-nav">
+    <a href="index.html">← Home</a>
+    <a class="active" href="assessment.html">Psico-attitudinale</a>
+    <a href="english.html">English B2</a>
+    <a href="colloquio.html">Colloquio</a>
+  </nav>
+  <div class="shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">SIMULATORE DIDATTICO • NON UFFICIALE</p>
+        <h1>Test Psico-Attitudinale</h1>
+        <p class="lead">Allenamento intensivo su formati tipici di assessment: attenzione, ragionamento astratto, numerico e verbale, concentrazione, SJT, in-basket e stile comportamentale.</p>
+      </div>
+      <div class="hero-tags"><span>620 quesiti</span><span>Offline</span><span>Mobile</span></div>
+    </header>
+
+    <main>
+      <section id="home" class="home-grid">
+        <div class="panel">
+          <div class="section-title"><div><p class="eyebrow">PREPARAZIONE</p><h2>Scegli la modalità</h2></div></div>
+          <div class="mode-grid">
+            <button class="mode-card featured" data-mode="assessment">
+              <b>Assessment completo</b><small>100 quesiti • 7 sezioni • 60 minuti</small><span>La simulazione principale</span>
+            </button>
+            <button class="mode-card" data-mode="practice"><b>Allenamento</b><small>Feedback immediato</small><span>Scegli categorie e quantità</span></button>
+            <button class="mode-card" data-mode="exam"><b>Esame libero</b><small>Correzione alla fine</small><span>Timer e mix personalizzabili</span></button>
+            <button class="mode-card" data-mode="personality"><b>Stile comportamentale</b><small>40 item • non valutato</small><span>Familiarizzazione al formato</span></button>
+          </div>
+
+          <div id="customSetup" class="custom-setup hidden">
+            <div class="fields">
+              <label><span>Numero quesiti</span><select id="countSelect"><option>20</option><option selected>50</option><option>100</option><option>200</option><option>300</option><option>500</option></select></label>
+              <label><span>Tempo</span><select id="timeSelect"><option value="0">Senza limite</option><option value="20">20 min</option><option value="30">30 min</option><option value="45">45 min</option><option value="60" selected>60 min</option><option value="90">90 min</option></select></label>
+            </div>
+            <h3>Categorie</h3><div id="categoryChooser" class="category-chooser"></div>
+            <button id="startCustom" class="btn primary">Inizia</button>
+          </div>
+
+          <div class="official-note">
+            <b>Cosa simula e cosa no</b>
+            <p>Il simulatore usa categorie comunemente impiegate nei test psico-attitudinali e coerenti con le tipologie descritte pubblicamente da Adecco. Non contiene domande ufficiali, soglie reali, algoritmi proprietari o materiale riservato di Adecco, SEA o ENAC.</p>
+          </div>
+        </div>
+
+        <aside class="panel stats-panel">
+          <p class="eyebrow">PROGRESSI LOCALI</p><h2>Statistiche</h2>
+          <div class="stat"><span>Sessioni</span><strong id="statSessions">0</strong></div>
+          <div class="stat"><span>Migliore</span><strong id="statBest">—</strong></div>
+          <div class="stat"><span>Media</span><strong id="statAvg">—</strong></div>
+          <div class="stat"><span>Ultima</span><strong id="statLast">—</strong></div>
+          <hr />
+          <p class="small">I risultati restano solo nel browser tramite localStorage.</p>
+          <button id="resumeBtn" class="btn secondary hidden">Riprendi sessione</button>
+        </aside>
+      </section>
+
+      <section id="quiz" class="hidden">
+        <div class="quiz-top panel">
+          <div class="progress-wrap"><div class="row"><b id="progressLabel">1 / 100</b><span id="sectionLabel"></span></div><div class="progress"><i id="progressBar"></i></div></div>
+          <div class="timer-wrap"><span id="categoryPill" class="pill">Attenzione</span><strong id="timer">08:00</strong></div>
+        </div>
+
+        <div class="quiz-grid">
+          <article class="panel question-panel">
+            <div class="q-meta"><span id="qIndex">Quesito 1</span><span id="difficulty"></span></div>
+            <div id="questionStem" class="question-stem"></div>
+            <div id="answers" class="answers"></div>
+            <div id="feedback" class="feedback hidden"></div>
+            <div class="q-actions">
+              <button id="prevBtn" class="btn secondary">← Indietro</button>
+              <button id="flagBtn" class="btn ghost">⚑ Segna</button>
+              <button id="nextBtn" class="btn primary">Avanti →</button>
+            </div>
+          </article>
+
+          <aside class="panel nav-panel">
+            <div class="row"><h3>Navigazione</h3><small id="answeredLabel">0 risposte</small></div>
+            <div id="navigator" class="navigator"></div>
+            <div class="legend"><span><i class="d ans"></i>risposta</span><span><i class="d flag"></i>segnata</span><span><i class="d curr"></i>corrente</span></div>
+            <button id="finishBtn" class="btn danger">Termina sessione</button>
+          </aside>
+        </div>
+      </section>
+
+      <section id="results" class="hidden">
+        <div class="panel result-hero">
+          <div><p class="eyebrow">RISULTATO DIDATTICO</p><h2 id="resultTitle">Buona prestazione</h2><p id="resultText"></p><div id="resultWarning" class="result-warning"></div></div>
+          <div class="score"><strong id="scorePct">0%</strong><span id="scoreRaw">0 / 0</span></div>
+        </div>
+        <div class="result-grid">
+          <div class="panel"><h3>Per area</h3><div id="areaScores"></div></div>
+          <div class="panel"><h3>Indicatori</h3><div id="indicators"></div></div>
+        </div>
+        <div class="panel review-panel">
+          <div class="row review-header"><div><h3>Revisione</h3><p class="small">Le spiegazioni servono per capire il metodo, non per memorizzare risposte.</p></div><select id="reviewFilter"><option value="wrong">Solo errori</option><option value="all">Tutte</option><option value="unanswered">Non risposte</option><option value="flagged">Segnate</option></select></div>
+          <div id="review"></div>
+        </div>
+        <div class="panel result-actions"><button id="retryWrong" class="btn secondary">Ripeti errori</button><button id="newSession" class="btn primary">Nuova sessione</button><button id="resetStats" class="btn ghost">Azzera statistiche</button></div>
+      </section>
+    </main>
+
+    <footer>Simulatore indipendente e non affiliato a SEA S.p.A., Adecco o ENAC. Per la selezione reale fanno fede esclusivamente le comunicazioni ricevute dal recruiter.</footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

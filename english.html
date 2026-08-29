@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Test English B2 non ufficiale per preparazione a un ruolo di security aeroportuale.">
+  <title>English B2 • SEA Security Prep</title>
+  <meta name="theme-color" content="#0b1f3a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="style.css">
+  <script src="pwa.js" defer></script>
+</head>
+<body>
+  <nav class="portal-nav">
+    <a href="index.html">← Home</a>
+    <a href="assessment.html">Psico-attitudinale</a>
+    <a class="active" href="english.html">English B2</a>
+    <a href="colloquio.html">Colloquio</a>
+  </nav>
+
+  <main class="english-shell">
+    <header class="english-hero">
+      <p class="eyebrow">TEST SEPARATO • ENGLISH B2</p>
+      <h1>English B2 for Airport Security</h1>
+      <p>Allenamento indipendente dal test psico-attitudinale: grammatica B1/B2, reading, vocabolario aeroportuale, istruzioni e dialoghi pratici. Non è un test ufficiale SEA/Adecco.</p>
+    </header>
+
+    <section id="engSetup" class="english-setup">
+      <h2>Scegli la modalità</h2>
+      <div class="english-modes">
+        <button class="english-mode selected" data-mode="full"><b>Test completo</b><span>60 domande • 45 minuti • correzione finale</span></button>
+        <button class="english-mode" data-mode="quick"><b>Test rapido</b><span>30 domande • 25 minuti • correzione finale</span></button>
+        <button class="english-mode" data-mode="practice"><b>Allenamento</b><span>30 domande • feedback immediato</span></button>
+      </div>
+      <p class="tip">Banca disponibile: <strong>120 domande</strong>. Le domande vengono mescolate a ogni sessione.</p>
+      <button id="engStart" class="btn primary">Inizia English B2</button>
+    </section>
+
+    <section id="engQuiz" class="english-quiz hidden">
+      <div class="eng-top">
+        <div style="flex:1">
+          <strong id="engProgressText">Domanda 1 di 60</strong>
+          <div class="eng-progress"><span id="engProgressBar"></span></div>
+        </div>
+        <span id="engTimer" class="timer">45:00</span>
+      </div>
+      <p id="engCategory" class="eyebrow">GRAMMAR</p>
+      <div id="engContext" class="eng-context hidden"></div>
+      <h2 id="engQuestion" class="eng-question"></h2>
+      <div id="engOptions" class="eng-options"></div>
+      <div id="engFeedback" class="eng-feedback hidden"></div>
+      <div class="eng-actions">
+        <button id="engPrev" class="btn secondary">← Indietro</button>
+        <button id="engNext" class="btn primary">Avanti →</button>
+      </div>
+      <button id="engFinish" class="btn danger" style="margin-top:16px">Termina e correggi</button>
+    </section>
+
+    <section id="engResult" class="english-result hidden">
+      <p class="eyebrow">RISULTATO ENGLISH B2</p>
+      <div id="engScore" class="eng-score">0%</div>
+      <p id="engSummary"></p>
+      <div id="engStats" class="eng-stat-grid"></div>
+      <h2>Revisione</h2>
+      <div id="engReview"></div>
+      <div class="actions">
+        <button id="engRestart" class="btn primary">Nuovo test</button>
+        <a href="colloquio.html" class="btn secondary" style="text-decoration:none">Vai al colloquio</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="english.js"></script>
+</body>
+</html>
