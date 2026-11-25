@@ -74,7 +74,7 @@ function render(){if(!current||current.done)return;show('quiz');const q=getQ(cur
  $('next').hidden=!isAnswered;$('next').disabled=!isAnswered;$('next').textContent=current.pos+1===current.ids.length?'Vedi risultati →':'Prossima domanda →';
  $('feedback').hidden=!(isAnswered&&study);
  if(isAnswered&&study){const good=pick===q.answer;$('feedback').className='feedback '+(good?'good':'bad');$('verdict').textContent=good?'Esatto! Risposta corretta.':'Risposta errata. La soluzione è evidenziata in verde.';
- $('explain').textContent=q.explanation;$('sourceLink').textContent=`Apri il tuo ${sourceFor(q)}`;$('sourceLink').href=`./${fileFor(q)}#page=${q.page}`;appendNote($('questionNote'),q)}else{$('questionNote').hidden=true}
+ $('explain').textContent=q.explanation;$('sourceLink').textContent=`Apri gli appunti ${sourceFor(q)} (testo)`;$('sourceLink').href=`./${fileFor(q).replace('.pdf','.html')}#page=${q.page}`;appendNote($('questionNote'),q)}else{$('questionNote').hidden=true}
  const n=Object.keys(current.selected).length;
  if(study){const right=Object.entries(current.selected).filter(([id,p])=>getQ(id)?.answer===p).length;$('scoreNow').textContent=`${right} corrette · ${n} risposte`}
  else $('scoreNow').textContent=`${n} risposte registrate`;
